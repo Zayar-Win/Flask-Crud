@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}
+Register
+{% endblock %}
+{% block content %}
+<div class="container mt-5" style="width: 50%;">
+    <h1 class="text-white text-center">Register</h1>
+    <form method="post" class="mt-4">
+      {{ form.csrf_token }}
+      <div class="mb-3">
+        <label for="formGroupExampleInput" class="form-label text-white">{{ form.name.label }}</label>
+        {{ form.name(class='form-control' ~ (' is-invalid' if form.name.errors else ''),placeholder='Enter your name') }}
+         <div id="validationServerUsernameFeedback" class="invalid-feedback">
+        {{ form.name.errors[0] }}
+      </div>
+      </div>
+      <div class="mb-3">
+        <label for="formGroupExampleInput" class="form-label text-white">{{ form.email.label }}</label>
+        {{ form.email(class='form-control' ~ (' is-invalid' if form.email.errors else ''),placeholder="Enter your email") }}
+        <div id="validationServerUsernameFeedback" class="invalid-feedback">
+        {{ form.email.errors[0] }}
+      </div>
+      </div>
+      <div class="mb-3">
+        <label for="formGroupExampleInput" class="form-label text-white">{{ form.password.label }}</label>
+        {{ form.password(class='form-control' ~ (' is-invalid' if form.password.errors else ''),placeholder="Enter your password") }}
+         <div id="validationServerUsernameFeedback" class="invalid-feedback">
+        {{ form.password.errors[0] }}
+      </div>
+      </div>
+      {{ form.submit(class='btn btn-primary w-100') }}
+      <p>Already have an accont? <a href="{{ url_for('login_page') }}">Login</a></p>
+    </form>
+  </div>
+{% endblock %}
