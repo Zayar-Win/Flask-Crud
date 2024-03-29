@@ -16,8 +16,18 @@ class Item(db.Model):
   name : Mapped[str] = mapped_column(unique=True)
   barcode : Mapped[str]
   price : Mapped[int]
-  user_id : Mapped[int] = mapped_column(ForeignKey('user.id'))
+  user_id : Mapped[int] = mapped_column(ForeignKey('user.id'),nullable=True)
   owner : Mapped["User"] = relationship(back_populates="items")
+
+  def buy(self,user):
+    self.user_id = user.id
+    user.budget -= self.price
+    db.session().commit()
+
+  def sell(self,user):
+    self.user_id = None
+    user.budget += self.price
+    db.session().commit()
 
 #User Model
 class User(db.Model,UserMixin):
@@ -38,3 +48,9 @@ class User(db.Model,UserMixin):
   
   def check_password(self,plain_text_password):
     return bcrypt.check_password_hash(self.password,plain_text_password)
+  
+  def can_buy(self,item):
+    return self.budget >= item.price
+
+  def can_sell(self,item):
+    return self.id == item.user_id

@@ -1,0 +1,43 @@
+
+<div class="modal fade" id="item-modal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{{ item.name }} Detail</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Name : {{ item.name }}</p>
+        <p>Barcode : {{ item.barcode }}</p>
+        <p>Price : {{ item.price }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="purchase-modal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{{ item.name }}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>The price of {{ item.name }} is ${{ item.price }}</p>
+        <p>Are you really want to purchase {{ item.name }}</p>
+        <p>You can purchase by clicking purchase button</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+        <form method="post">
+          {{ purchaseForm.csrf_token }}
+          <input type="hidden" name="item" value="{{ item.id }}">
+          {{ purchaseForm.submit(class="btn btn-outline-success") }}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
